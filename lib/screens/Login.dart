@@ -14,6 +14,63 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: Center(
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          child: Container(
+            padding: const EdgeInsets.all(15),
+            height: 300,
+            width: 300,
+            color: const Color.fromARGB(31, 159, 158, 158),
+            child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    const Text(
+                      'Login',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 30,
+                          letterSpacing: 2.0),
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(hintText: 'Email'),
+                      validator: (value) {
+                        if (value!.isNotEmpty && value.length > 5) {
+                          return null;
+                        } else {
+                          return "Error";
+                        }
+                      },
+                    ),
+                    TextFormField(
+                      obscureText: true,
+                      decoration: const InputDecoration(hintText: 'Password'),
+                      validator: (value) {
+                        if (value!.isNotEmpty && value.length > 5) {
+                          return null;
+                        } else {
+                          return "Error";
+                        }
+                      },
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        } else {
+                          Navigator.pushNamed(context, '/home');
+                        }
+                      },
+                      child: const Text('Login'),
+                    )
+                  ],
+                )),
+          ),
+        ),
+      ),
+    );
   }
 }
