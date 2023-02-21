@@ -26,6 +26,7 @@ class _HomeState extends State<Home> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            (currentUser?.email) ? const Text("yes") : const Text("no"),
             Text(email ?? ''),
             ElevatedButton(
                 onPressed: () {
