@@ -1,5 +1,6 @@
 import 'package:crud/firebase_options.dart';
 import 'package:crud/screens/Login.dart';
+import 'package:crud/screens/Test.dart';
 import 'package:crud/screens/home.dart';
 import 'package:crud/screens/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const Home(),
         '/signup': (context) => const Signup(),
         '/login': (context) => const Login(),
+        '/test': (context) => const Test(),
       },
     );
   }

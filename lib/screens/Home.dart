@@ -26,7 +26,6 @@ class _HomeState extends State<Home> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            (currentUser?.email) ? const Text("yes") : const Text("no"),
             Text(email ?? ''),
             ElevatedButton(
                 onPressed: () {
@@ -42,7 +41,12 @@ class _HomeState extends State<Home> {
                 onPressed: () {
                   logout();
                 },
-                child: const Text("Logout"))
+                child: const Text("Logout")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/test');
+                },
+                child: const Text("Test")),
           ],
         ),
       ),
