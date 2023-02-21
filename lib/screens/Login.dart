@@ -1,8 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+final GlobalKey<FormState> _formKeyLogin = GlobalKey<FormState>();
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -12,6 +13,29 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> loginAccount() async {
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+      } else if (e.code == 'wrong-password') {}
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +48,7 @@ class _LoginState extends State<Login> {
             width: 300,
             color: const Color.fromARGB(31, 159, 158, 158),
             child: Form(
-                key: _formKey,
+                key: _formKeyLogin,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -37,6 +61,7 @@ class _LoginState extends State<Login> {
                     ),
                     TextFormField(
                       decoration: const InputDecoration(hintText: 'Email'),
+                      controller: emailController,
                       validator: (value) {
                         if (value!.isNotEmpty && value.length > 5) {
                           return null;
@@ -48,6 +73,7 @@ class _LoginState extends State<Login> {
                     TextFormField(
                       obscureText: true,
                       decoration: const InputDecoration(hintText: 'Password'),
+                      controller: passwordController,
                       validator: (value) {
                         if (value!.isNotEmpty && value.length > 5) {
                           return null;
@@ -58,9 +84,10 @@ class _LoginState extends State<Login> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        if (!_formKey.currentState!.validate()) {
+                        if (!_formKeyLogin.currentState!.validate()) {
                           return;
                         } else {
+                          loginAccount();
                           Navigator.pushNamed(context, '/home');
                         }
                       },
